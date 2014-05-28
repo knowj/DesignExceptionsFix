@@ -1,4 +1,4 @@
-DesignExceptionsFix
+DesignExceptionsFix - Work in progress (not tested in current state)
 ===================
 
 Resolves issue with Magento Enterprise Full Page Cache (FPC) and  Design Exceptions.
@@ -12,8 +12,8 @@ have enough data available to ensure the correct device is served the correct th
 do this we cache the design exceptions with a common key to allow the rules to be retrieved
 without Magento being init.
 
-Observer.php - Save the design exceptions to cache
-PageCache/Processor.php - Append the request id with the design exception theme (if applicable)
+- Observer.php - Save the design exceptions to cache
+- PageCache/Processor.php - Append the request id with the design exception theme (if applicable)
 
 
 The following will need adding to the global node of your /app/etc/local.xml
