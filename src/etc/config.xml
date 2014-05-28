@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Jh_DesignExceptionsFix>
+            <version>0.1.0</version>
+        </Jh_DesignExceptionsFix>
+    </modules>
+    <global>
+        <models>
+            <jh_designexceptionsfix>
+                <class>Jh_DesignExceptionsFix_Model</class>
+            </jh_designexceptionsfix>
+            <!-- Rewrite cache processor-->
+            <enterprise_pagecache>
+                <rewrite>
+                    <processor>Jh_DesignExceptionsFix_Model_PageCache_Processor</processor>
+                </rewrite>
+            </enterprise_pagecache>
+        </models>
+    </global>
+    <frontend>
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <enterprise_pagecache>
+                        <class>jh_designexceptionsfix/observer</class>
+                        <method>cacheResponse</method>
+                    </enterprise_pagecache>
+                </observers>
+            </controller_front_send_response_before>
+        </events>
+    </frontend>
+</config>

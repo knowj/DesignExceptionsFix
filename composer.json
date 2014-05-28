@@ -1,0 +1,15 @@
+{
+    "name": "jh/design-exception-fix",
+    "type": "magento-module",
+    "license":"OSL-3.0",
+    "description":"Magento Enterprise FPC Fix for design exceptions",
+    "authors":[
+        {
+            "name":"John Knowles",
+            "email":"john@wearejh.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
