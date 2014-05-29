@@ -1,7 +1,7 @@
 {
     "name": "jh/design-exception-fix",
     "type": "magento-module",
-    "license":"OSL-3.0",
+    "license":"MIT",
     "description":"Magento Enterprise FPC Fix for design exceptions",
     "authors":[
         {
