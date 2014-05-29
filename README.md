@@ -28,8 +28,8 @@ statically defines the Enterprise_PageCache_Model_Processor the read and write r
 
 Adds FPC compatibility with
 - System > Configuration > Design > Themes:
--- Templates > Add Exception
--- Skin > Add Exception
--- Layout > Add Exception
+    - Templates > Add Exception
+    - Skin > Add Exception
+    - Layout > Add Exception
 
 Each exception is taken into consideration individually to allow for more advanced configurations.
