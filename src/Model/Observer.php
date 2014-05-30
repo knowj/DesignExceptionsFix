@@ -21,7 +21,6 @@ class Jh_DesignExceptionsFix_Model_Observer extends Enterprise_PageCache_Model_O
     /**
      * Checks whether exists design exception value in cache.
      * If not, gets it from config and puts into cache
-     * @todo Condense the following into a single cache file
      * @return Enterprise_PageCache_Model_Observer
      */
     protected function _saveDesignException()
@@ -29,41 +28,26 @@ class Jh_DesignExceptionsFix_Model_Observer extends Enterprise_PageCache_Model_O
         if (!$this->isCacheEnabled()) {
             return $this;
         }
+
+        Varien_Profiler::start('FPC DESIGN EXCEPTIONS FIX:'.__METHOD__);
+
         $cacheId = Enterprise_PageCache_Model_Processor::DESIGN_EXCEPTION_KEY;
-
-        $exception = Enterprise_PageCache_Model_Cache::getCacheInstance()->load($cacheId);
-        if (!$exception) {
-            $exception = Mage::getStoreConfig(self::XML_PATH_DESIGN_EXCEPTION);
-            Enterprise_PageCache_Model_Cache::getCacheInstance()->save($exception, $cacheId);
+        if (!Enterprise_PageCache_Model_Cache::getCacheInstance()->getFrontend()->test($cacheId)) {
+            $exception = array(
+                'package' => @unserialize(Mage::getStoreConfig(parent::XML_PATH_DESIGN_EXCEPTION)),
+                'skin' => @unserialize(Mage::getStoreConfig(self::XML_PATH_DESIGN_SKIN_EXCEPTION)),
+                'template' => @unserialize(Mage::getStoreConfig(self::XML_PATH_DESIGN_TEMPLATE_EXCEPTION)),
+                'layout' => @unserialize(Mage::getStoreConfig(self::XML_PATH_DESIGN_LAYOUT_EXCEPTION))
+            );
+            $exception = serialize($exception);
+            Enterprise_PageCache_Model_Cache::getCacheInstance()
+                ->save($exception, $cacheId, array(Enterprise_PageCache_Model_Processor::CACHE_TAG));
             $this->_processor->refreshRequestIds();
+
         }
 
-        $cacheId = Jh_DesignExceptionsFix_Model_PageCache_Processor::DESIGN_SKIN_EXCEPTION_KEY;
+        Varien_Profiler::stop('FPC DESIGN EXCEPTIONS FIX:'.__METHOD__);
 
-        $exception = Enterprise_PageCache_Model_Cache::getCacheInstance()->load($cacheId);
-        if (!$exception) {
-            $exception = Mage::getStoreConfig(self::XML_PATH_DESIGN_SKIN_EXCEPTION);
-            Enterprise_PageCache_Model_Cache::getCacheInstance()->save($exception, $cacheId);
-            $this->_processor->refreshRequestIds();
-        }
-
-        $cacheId = Jh_DesignExceptionsFix_Model_PageCache_Processor::DESIGN_TEMPLATE_EXCEPTION_KEY;
-
-        $exception = Enterprise_PageCache_Model_Cache::getCacheInstance()->load($cacheId);
-        if (!$exception) {
-            $exception = Mage::getStoreConfig(self::XML_PATH_DESIGN_TEMPLATE_EXCEPTION);
-            Enterprise_PageCache_Model_Cache::getCacheInstance()->save($exception, $cacheId);
-            $this->_processor->refreshRequestIds();
-        }
-
-        $cacheId = Jh_DesignExceptionsFix_Model_PageCache_Processor::DESIGN_LAYOUT_EXCEPTION_KEY;
-
-        $exception = Enterprise_PageCache_Model_Cache::getCacheInstance()->load($cacheId);
-        if (!$exception) {
-            $exception = Mage::getStoreConfig(self::XML_PATH_DESIGN_LAYOUT_EXCEPTION);
-            Enterprise_PageCache_Model_Cache::getCacheInstance()->save($exception, $cacheId);
-            $this->_processor->refreshRequestIds();
-        }
         return $this;
     }
 }
