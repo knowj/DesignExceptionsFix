@@ -33,3 +33,5 @@ Adds FPC compatibility with
     - Layout > Add Exception
 
 Each exception is taken into consideration individually to allow for more advanced configurations.
+
+Tested with 1.12, 1.13
